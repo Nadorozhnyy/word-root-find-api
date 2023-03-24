@@ -35,7 +35,7 @@ ruwordnet download
 ```bash
 engine = create_engine(f'sqlite:///{filename}' +'?check_same_thread=False', echo=False)
 ```
-Без этого изменения запрос на с работающим api можно сделать один раз, на повторный выпадает ошибка "SQLite objects created in a thread can only be used in that same thread"
+Без этого изменения запрос с работающим api можно сделать один раз, на повторный выпадает ошибка "SQLite objects created in a thread can only be used in that same thread"
 
 Запустить файл main.py.
 ```bash
