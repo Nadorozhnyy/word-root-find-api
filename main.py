@@ -2,13 +2,20 @@
 
 from flask import Flask, jsonify, request
 from flask_restful import Api, Resource
-from ruwordnet import RuWordNet
-from nltk.corpus import wordnet as wn_en
 
-wn = RuWordNet()
+from ruwordnet import RuWordNet
+
+import spacy
+from spacy_wordnet.wordnet_annotator import WordnetAnnotator
+
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 api = Api(app)
+
+wn = RuWordNet(filename_or_session='venv/Lib/site-packages/ruwordnet/static/ruwordnet.db')
+
+nlp = spacy.load('en_core_web_sm')
+nlp.add_pipe("spacy_wordnet", after='tagger')
 
 
 class FindWordCognates(Resource):
@@ -51,7 +58,8 @@ class FindWordCognates(Resource):
         :return: set
         """
         synonyms = []
-        for syn in wn_en.synsets(word):
+        token = nlp(word)[0]
+        for syn in token._.wordnet.synsets():
             for sense in syn.lemmas():
                 synonyms.append(sense.name().replace('_', ' '))
         return set(synonyms)
@@ -60,6 +68,6 @@ class FindWordCognates(Resource):
 api.add_resource(FindWordCognates, "/api/v1/word_roots")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
 
 

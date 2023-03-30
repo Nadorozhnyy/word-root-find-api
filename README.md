@@ -7,7 +7,8 @@
   * python 3.7
   * Flask 2.2.3
   * Flask-RESTful 0.3.9
-  * nltk 3.8.1
+  * spacy 3.5.1
+  * spacy-wordnet 0.1.0
   * ruwordnet 0.0.6
 
 ## Управление
@@ -19,11 +20,11 @@
 ```bash
 pip install -r requirements.txt
 ```
-Установить базы данных для библиотек nltk и ruwordnet
+Установить базы данных для библиотек spacy и ruwordnet
 
-Для nltk (подробнее в документации https://www.nltk.org/install.html)
+Для spacy (подробнее в документации https://spacy.io/usage)
 ```bash
-python -m nltk.downloader wordnet
+python -m spacy download en_core_web_sm
 ```
 
 Для ruwordnet (подробнее в документации https://github.com/avidale/python-ruwordnet)
